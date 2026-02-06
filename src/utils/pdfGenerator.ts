@@ -146,16 +146,16 @@ export const generateExperiencePDF = async (experience: ExperienceData) => {
 
   // Signature section
   if (experience.isVerified && experience.managerName && experience.managerTitle && experience.managerEmail) {
-    // Verification badge
+    // Verification badge - positioned properly within content area
     pdf.setFontSize(9)
     pdf.setTextColor('#059669') // Green color
     pdf.setFont('helvetica', 'bold')
     
-    // Add verification box
+    // Add verification box with proper positioning
     pdf.setFillColor(220, 252, 231) // Light green background
     pdf.setDrawColor(34, 197, 94) // Green border
-    pdf.roundedRect(pageWidth - 50, yPosition - 8, 40, 12, 2, 2, 'FD')
-    pdf.text('✓ DIGITALLY VERIFIED', pageWidth - 30, yPosition - 2, { align: 'center' })
+    pdf.roundedRect(pageWidth - 55, yPosition - 5, 45, 12, 2, 2, 'FD')
+    pdf.text('✓ DIGITALLY VERIFIED', pageWidth - 32.5, yPosition + 1, { align: 'center' })
     
     yPosition += 15
 
@@ -163,32 +163,33 @@ export const generateExperiencePDF = async (experience: ExperienceData) => {
     pdf.setTextColor(textColor)
     pdf.setFont('helvetica', 'normal')
     yPosition = addText('Sincerely,', 20, yPosition, pageWidth - 40, 11)
-    yPosition += 20
+    yPosition += 25  // Increased spacing after "Sincerely,"
 
-    // Signature placeholder
+    // Signature placeholder line
     pdf.setLineWidth(0.5)
     pdf.setDrawColor(lightGray)
     pdf.line(20, yPosition, 80, yPosition)
-    yPosition += 8
+    yPosition += 10  // Space between line and name
 
-    // Manager details
+    // Manager details with proper spacing
     pdf.setFont('helvetica', 'bold')
     yPosition = addText(experience.managerName || 'Manager Name', 20, yPosition, pageWidth - 40, 12, textColor, 'bold')
-    yPosition += 5
+    yPosition += 8   // Increased spacing after name
     
     pdf.setFont('helvetica', 'normal')
     yPosition = addText(experience.managerTitle || 'Manager Title', 20, yPosition, pageWidth - 40, 10)
-    yPosition += 4
+    yPosition += 6   // Space between title and company
     yPosition = addText(experience.clientCompany, 20, yPosition, pageWidth - 40, 10)
-    yPosition += 4
+    yPosition += 6   // Space between company and email
     
     pdf.setTextColor(lightGray)
     yPosition = addText(`Email: ${experience.managerEmail || 'manager@company.com'}`, 20, yPosition, pageWidth - 40, 9, lightGray)
+    yPosition += 15  // Added more space after email
     
     if (experience.verifiedAt) {
-      yPosition += 10
       pdf.setFontSize(8)
       yPosition = addText(`Digitally verified on: ${format(new Date(experience.verifiedAt), 'dd MMMM yyyy, HH:mm')} UTC`, 20, yPosition, pageWidth - 40, 8, lightGray)
+      yPosition += 10  // Space after verification timestamp
     }
   } else {
     // Pending verification
