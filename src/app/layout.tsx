@@ -32,6 +32,7 @@ export default function RootLayout({
                 <nav className="space-x-6">
                   <a href="/" className="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
                   <a href="/create" className="text-gray-600 hover:text-gray-900 transition-colors">Create</a>
+                  <a href="/debug" className="text-gray-500 hover:text-gray-700 transition-colors text-sm">Debug</a>
                 </nav>
               </div>
             </div>
